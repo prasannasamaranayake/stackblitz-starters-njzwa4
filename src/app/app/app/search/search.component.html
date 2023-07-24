@@ -1,0 +1,7 @@
+<input
+  type="text"
+  [(ngModel)]="searchKey"
+  (keyup)="keyUp.next($event.target)"
+/>
+
+<app-display [products]="products"></app-display>
