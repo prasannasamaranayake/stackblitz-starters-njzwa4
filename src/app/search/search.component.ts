@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { debounceTime, Subject } from 'rxjs';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-search',
@@ -12,7 +13,7 @@ export class SearchComponent implements OnInit {
   public searchKey = '';
   public products = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private apps: AppService) {}
 
   ngOnInit() {
     /*
@@ -34,8 +35,10 @@ export class SearchComponent implements OnInit {
     */
     this.keyUp.pipe(debounceTime(1000)).subscribe(() => {
       console.log(this.searchKey);
-      this.http
-        .get(`https://dummyjson.com/products/search?q=${this.searchKey}`)
+      this.apps
+        .getProducts(
+          `https://dummyjson.com/products/search?q=${this.searchKey}`
+        )
         .subscribe((data: any) => {
           console.log('data');
           console.log(data);
